@@ -104,6 +104,128 @@ bathroom.style.color = 'red';
 
 // li.style.color = 'green'; // doesn't work
 for(i of li) {
-    console.log(i);
-    i.style.color = 'green';
+    // console.log(i);
+    i.style.color = 'white';
+}
+
+/* 
+* .querySelector()
+    - Grabs frist instance of an element or null if nothing is found.
+    - can target by ID, Class, or Element
+        - will need to append # for ID
+        - will need to append . for Class
+*/
+
+let firstLi = document.querySelector('li');
+// console.log(firstLi);
+
+// let toDoList = document.querySelector('#listTitle');
+// console.log("ID select: ", toDoList);
+// toDoList.style.textAlign = 'center';
+document.querySelector('#listTitle').style.textAlign = 'center';
+
+/* 
+* .querySelectorAll()
+    - Returns a static nodeList (an array) list of elements.
+    * static: will not update
+*/
+
+let nodeListLi = document.querySelectorAll('li');
+// console.log(nodeListLi);
+//? static example
+let newLi = document.createElement('li');
+let ul = document.getElementById('ulToDo');
+newLi.innerText = "New item"
+ul.appendChild(newLi);
+// console.log(li);
+
+/* 
+* .getElementsByClassName()
+*/
+let liClass = document.getElementsByClassName('listItem');
+// console.log('-----------------')
+// console.log(liClass);
+
+/* 
+! Event Listeners
+    .addEventLister()
+        - DOM node method
+        - requires an event to "listen for" and a callback function (arguments)
+
+    ex:
+        node.addEventListener('click', CB)
+*/
+
+let btn = document.getElementById('submit');
+// console.log(btn);
+
+// btn.addEventListener("click", (event) => {
+//     // console.log(event);
+//     console.log('Someone clicked the button')
+// });
+
+/* 
+* Process of Manipulating our DOM
+    - Capture data
+    - Access parent element
+    - Create element
+    - Assign value to newly created element
+    - Append our newly created element to parent
+*/
+
+let input = document.getElementById('listInput');
+
+btn.addEventListener('click', addItem);
+
+function addItem() {
+    // console.log(input.value);
+    let newItem = document.createElement('li');
+    newItem.textContent = input.value; // pulled from the value property of the input field element.
+    newItem.style = `
+        color: blue;
+    `;
+
+    ul.appendChild(newItem);
+    input.value = '';
+}
+
+//! ---------------------------------
+// Global variable
+let buildBtn = document.getElementById('table-btn');
+let shellDiv = document.getElementById('shell-div');
+// mock data
+const myList = [
+    'red', 'blue', 'green', 'purple', 'yellow', 'orange'
+];
+
+// Event Listener
+buildBtn.addEventListener('click', buildTable);
+
+// Function to build and display elements
+function buildTable() {
+
+    myList.forEach((color, i) => {
+        // create elements
+        let div = document.createElement('div');
+        let h2 = document.createElement('h2');
+        let p = document.createElement('p');
+
+        // assign value to properties
+        h2.textContent = color;
+        h2.style.color = color;
+        p.innerHTML = `
+            Item <u><b>${i}</b></u> in my list
+        `;
+
+        // set to parent element
+        div.appendChild(h2);
+        div.appendChild(p);
+        shellDiv.appendChild(div);
+    });
+
+    shellDiv.style = `
+        display: flex;
+        align-items: space-around;
+    `
+
 }
